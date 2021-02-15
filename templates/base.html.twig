@@ -3,11 +3,31 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link href="http://localhost/trialexam/public/build/app.css?v={{date().timestamp}}" rel="stylesheet"/>
+
+        <script src="http://localhost/trialexam/public/build/app.js" defer></script>
+
+        {# <img src="{{asset('images/paveiksliukas.gif')}}">
+        <img src="{{path('get_image',{id:85547})}}"> #}
+
+        <!-- include summernote css/js -->
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
         {% block stylesheets %}{% endblock %}
 
         {% block javascripts %}{% endblock %}
     </head>
-    <body>
+    <body  style="background-image:url('{{ asset('./build/background.png') }}') ">
+    {% include 'menu.html.twig' %}
         {% block body %}{% endblock %}
+         <main class="py-4" style="background-image:url('{{ asset('./build/background.jpg') }}')">
+
+        {% if errors is defined and errors|length > 0 %}
+        {% include 'errors/validation.html.twig' %}
+        {% endif %}
+
+        {% if success is defined and success|length > 0 %}
+        {% include 'messages/success.html.twig' %}
+        {% endif %}
+        </main>
     </body>
 </html>

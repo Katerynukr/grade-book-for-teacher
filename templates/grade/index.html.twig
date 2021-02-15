@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Grades List
+{% endblock %}
+
+
+{% block body %}
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div>
+					<div>
+						<h1>Grades in School</h1>
+					</div>
+					<div>
+						List order by:
+						<form action="{{ path('grade_index')}}" method="GET" class="sort-form">
+							<div class="btn-group order-by">
+								<select name="sort_by" class="btn btn-outline-dark dropdown-toggle">
+									<option value="default">default</option>
+									<option value="lowest_grade" {% if sortBy=='lowest_grade' %} selected {% endif %}>lowest grade</option>
+									<option value="highest_grade" {% if sortBy=='highest_grade' %} selected {% endif %}>highest grade</option>
+								</select>
+								<button type="submit" class="btn btn-sort">Sort IT!</button>
+								<a href="{{ path('grade_index')}}" class="btn btn-sort">
+									<i class="fa fa-eraser" aria-hidden="true"></i>
+								</a>
+							</div>
+						</form>
+
+						<ul class="list-group unordered-list ">
+							{% for grade in grades %}
+								<li class=" li-bck" style="background:transparent;">
+									<div class="list-group-item__line single-element info-list">
+										<span>
+											<div class="single-element">
+												{{grade.student.name}}
+												{{grade.student.surname}}
+											</div>
+										</span>
+										<div class="list-group-item__line__buttons">
+											<a href="{{ path('grade_edit', {id: grade.id}) }}" class="btn-edit btn">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+											</a>
+											<form action="{{ path('grade_delete', {id: grade.id}) }}" method="POST">
+												<input type="hidden" name="token" value="{{ csrf_token('check_csrf_hidden') }}"/>
+												<button type="submit" class="btn-delete btn">
+													<i class="fa fa-trash" aria-hidden="true"></i>
+												</button>
+											</form>
+										</div>
+									</div>
+									<div class="list-group-item__line single-element">				
+											<div class="single-element list-group-item__line">
+												{{grade.lectur.name}}
+												{{grade.grade}}
+											</div>
+									</div>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

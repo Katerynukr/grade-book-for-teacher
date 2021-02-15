@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit new Grade
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div>
+					<div>
+						<h1>Edit the Student's Grade</h1>
+					</div>
+
+					<div>
+						<form action="{{path('grade_update', {id: grade.id})}}" method="POST">
+                        <div class="form-group">
+								<label>Student:</label>
+                                <select name="grade_student_id" class="form-control">
+									<option value="0">Select student</option>
+									{% for student in students %}
+										<option value="{{student.id}}" {% if student.id == grade.studentId %} selected {% endif %}>{{student.name}}
+											{{student.surname}}</option>
+									{% endfor %}
+								</select>
+								<small class="form-text text-muted">Student to get a grade.</small>
+							</div>
+                            <div class="form-group">
+								<label>Lectur:</label>
+                                <select name="grade_lectur_id" class="form-control">
+									<option value="0">Select lectur</option>
+									{% for lectur in lectures %}
+										<option value="{{lectur.id}}" {% if lectur.id == grade.lecturId %} selected {% endif %}>{{lectur.name}}</option>
+									{% endfor %}
+								</select>
+								<small class="form-text text-muted">Grade for lectur of a student.</small>
+							</div>
+
+							<div class="form-group">
+								<label>Grade:</label>
+								<input type="text" class="form-control" name="grade_grade" value="{{grade.grade}}">
+								<small class="form-text text-muted">Student's grade.</small>
+							</div>
+							<input type="hidden" name="token" value="{{ csrf_token('check_csrf_hidden') }}"/>
+							<button type="submit" class="btn btn-add save-btn btn-block">Edit Grade</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+{% endblock %}

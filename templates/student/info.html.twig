@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Students List
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div>
+					<div>
+						<h1>Students at School</h1>
+					</div>
+					<div>
+						<h4 class="center-bedge d-flex">
+							<span class=" badge  center ">
+								{{student.name}}
+								{{student.surname}}
+							</span>
+						</h4>
+							<ul class="list-group unordered-list">
+								{% for result in results %}
+									<li class=" li-bck" style="background:transparent;">
+										<div class="list-group-item__line single-element info-list">
+
+											{% for data in result %}
+												<span>
+													<div class="single-element">
+														{{data}}
+													</div>
+												</span>
+											{% endfor %}
+
+										</div>
+									</li>
+								{% endfor %}
+							</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Students List
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div>
+					<div>
+						<h1>Students at School</h1>
+					</div>
+					<div>
+						 List order by:
+						<form action="{{ path('student_index')}}" method="GET" class="sort-form">
+							<div class="btn-group order-by">
+								<select name="sort_by" class="btn btn-outline-dark dropdown-toggle">
+									<option value="default">default</option>
+									<option value="sort_by_name_asc" {% if sortBy=='sort_by_name_asc' %} selected {% endif %}>name a-z</option>
+									<option value="sort_by_name_desc" {% if sortBy=='sort_by_name_desc' %} selected {% endif %}>name z-a</option>
+									<option value="sort_by_surname_asc" {% if sortBy=='sort_by_surname_asc' %} selected {% endif %}>surname a-z</option>
+									<option value="sort_by_surname_desc" {% if sortBy=='sort_by_surname_desc' %} selected {% endif %}>surname z-a</option>
+								</select>
+								<button type="submit" class="btn btn-sort">Sort IT!</button>
+								<a href="{{ path('student_index')}}" class="btn btn-sort">
+									<i class="fa fa-eraser" aria-hidden="true"></i>
+								</a>
+							</div>
+						</form>
+
+						<ul class="list-group unordered-list ">
+							{% for student in  students %}
+								<li class=" li-bck" style="background:transparent;">
+									<div class="list-group-item__line single-element info-list">
+										<span>
+											{{student.name}}
+											{{student.surname}}
+                                            
+										</span>
+										<div class="list-group-item__line__buttons">
+											<a href="{{ path('student_edit', {id: student.id}) }}" class="btn-edit btn">
+												<i class="fa fa-plus" aria-hidden="true"></i>
+											</a>
+											<form action="{{ path('student_delete', {id: student.id}) }}" method="POST"> 
+												<input type="hidden" name="token" value="{{ csrf_token('check_csrf_hidden') }}"/>
+												<button type="submit" class="btn-delete btn">
+													<i class="fa fa-trash" aria-hidden="true"></i>
+												</button>
+											</form> 
+										</div>
+									</div>
+									<span>
+											{{student.name}}
+											{{student.surname}}
+                                            {{student.email}}
+                                            {{student.phone}}
+										</span>
+									<div class="list-group-item__line__buttons">
+											<a href="{{ path('student_info', {id: student.id}) }}" class="btn-info save-btn btn-block btn">
+												<i class="fa fa-info" aria-hidden="true"></i>
+											</a>
+									</div>
+								</li>
+							{% endfor %} 
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
